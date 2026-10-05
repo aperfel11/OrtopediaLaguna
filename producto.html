@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Producto - Ortopedia Laguna</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+<body>
+
+    <header id="global-header" class="main-header"></header>
+
+    <main class="product-page-container">
+        
+        <div class="back-navigation">
+            <a href="#" id="btn-back-category"><i class="fa-solid fa-arrow-left"></i> Volver al listado</a>
+        </div>
+
+        <div class="product-single-layout">
+            
+            <div class="product-media-box">
+                <div class="main-image-wrapper">
+                    <img src="" alt="" id="detail-img">
+                </div>
+
+                <div class="media-addons-grid">
+                    <div class="product-gallery-thumbnails" id="detail-thumbnails-container">
+                        </div>
+                    
+                    <div class="product-video-wrapper" id="detail-video-container">
+                        <div class="video-placeholder">
+                            <i class="fa-solid fa-circle-play"></i>
+                            <span>Vídeo Demostrativo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="security-notice">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Producto sanitario garantizado con asesoramiento técnico especializado.</span>
+                </div>
+            </div>
+
+            <div class="product-details-box">
+                <div class="product-breadcrumbs">
+                    <span id="detail-category-badge" class="badge-main">Categoría</span>
+                    <span class="breadcrumb-separator"><i class="fa-solid fa-chevron-right"></i></span>
+                    <span id="detail-subcategory" class="badge-sub">Subcategoría</span>
+                </div>
+
+                <h1 id="detail-name" class="product-main-title"></h1>
+                
+                <div class="product-description-wrapper">
+                    <h3>Descripción del Artículo</h3>
+                    <p id="detail-desc" class="product-long-description"></p>
+                </div>
+                
+                <div class="product-specs-wrapper" id="detail-features-wrapper">
+    <h3><i class="fa-solid fa-list-check"></i> Características Técnicas</h3>
+    <ul class="specs-features-list" id="detail-features-list">
+        </ul>
+</div>
+
+                <div class="product-action-card">
+                    <div class="action-card-text">
+                        <h4>¿Necesitas asesoramiento o un presupuesto?</h4>
+                        <p>Contacta directamente con nuestros especialistas por WhatsApp para consultar disponibilidad o resolver dudas técnicas.</p>
+                    </div>
+                    <a href="#" class="btn-whatsapp-action" id="detail-whatsapp-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> Solicitar Información por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <section class="product-extra-info-section">
+            <div class="technical-table-container">
+                <h2><i class="fa-solid fa-gears"></i> Ficha Técnica y Especificaciones</h2>
+                <table class="specs-data-table">
+                    <tbody id="detail-specs-table-body">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="global-footer" class="main-footer"></footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

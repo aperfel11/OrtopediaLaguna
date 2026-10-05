@@ -1,0 +1,3415 @@
+/* ==========================================================================
+   1. ESTILOS GLOBALES Y VARIABLES
+   ========================================================================== */
+:root {
+    --primary-blue: #0056b3;     /* Azul corporativo principal */
+    --secondary-blue: #003d80;   /* Azul oscuro para interacciones/acentos */
+    --text-dark: #212529;        /* Gris muy oscuro para legibilidad */
+    --text-muted: #6c757d;       /* Gris secundario para textos informativos */
+    --light-bg: #f8f9fa;         /* Fondo gris claro de la web */
+    --white: #ffffff;
+    --border-color: #dee2e6;     /* Gris claro para líneas divisorias */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   2. ESTRUCTURA SUPERIOR (LOGO, BÚSQUEDA Y CONTACTO)
+   ========================================================================== */
+.main-header {
+    background-color: var(--white);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 9999; 
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Contenedor del Logo */
+.logo img {
+    height: 60px; /* Altura ideal basada en el diseño de referencia */
+    width: auto;
+    display: block;
+}
+
+/* Barra de búsqueda */
+.search-bar {
+    display: flex;
+    flex: 1;
+    max-width: 600px;
+}
+.search-bar input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+.search-bar input:focus {
+    border-color: var(--primary-blue);
+}
+.search-bar button {
+    padding: 0 25px;
+    border: 1px solid var(--primary-blue);
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+.search-bar button:hover {
+    background-color: var(--secondary-blue);
+    border-color: var(--secondary-blue);
+}
+
+/* Información de Contacto */
+.header-contact .contact-item {
+    text-decoration: none;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.header-contact i {
+    font-size: 24px;
+    color: var(--primary-blue);
+}
+.header-contact div {
+    display: flex;
+    flex-direction: column;
+}
+.contact-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.contact-phone {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+/* Ocultamos el icono redondo de contacto en ordenador (ya tienen la top-bar) */
+.mobile-contact-icon {
+    display: none;
+}
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ==========================================================================
+   3. BARRA DE NAVEGACIÓN PRINCIPAL
+   ========================================================================== */
+.main-nav {
+    background-color: var(--white);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+}
+
+.nav-links {
+    max-width: 1200px;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* Elementos principales de la lista */
+.nav-links > li {
+    position: relative; /* Base crucial para posicionar el menú hijo abajo */
+    display: block;
+}
+
+/* Enlaces del menú superior */
+.nav-links > li > a {
+    display: block;
+    padding: 20px 22px;
+    color: #555555; /* Gris suave */
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+/* Efecto hover general */
+.nav-links > li > a:hover, 
+.nav-links > li.dropdown:hover > a.dropdown-toggle {
+    color: var(--primary-blue);
+    background-color: #f8f9fa;
+}
+
+/* Pestaña activa - Bloque azul con texto blanco */
+.nav-links > li > a.active {
+    color: var(--white);
+    background-color: var(--primary-blue);
+    font-weight: 600;
+}
+
+/* Icono de flecha en "Productos" */
+.dropdown-toggle i {
+    font-size: 12px;
+    margin-left: 4px;
+}
+
+/* ==========================================================================
+   4. MENÚ DESPLEGABLE CORREGIDO (DROPDOWN VERTICAL)
+   ========================================================================== */
+.dropdown-menu {
+    position: absolute;
+    top: 100%; /* Forzado estrictamente debajo de la pestaña padre */
+    left: 0;
+    background-color: var(--white);
+    min-width: 260px; /* Espacio cómodo para que el texto no se amontone */
+    list-style: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border: 1px solid var(--border-color);
+    
+    /* Configuración en columna para evitar desvíos horizontales */
+    display: flex;
+    flex-direction: column; 
+    
+    /* Estado oculto inicial con transición suave */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    z-index: 999;
+}
+
+/* Cada fila del menú desplegable */
+.dropdown-menu li {
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.dropdown-menu li:last-child {
+    border-bottom: none;
+}
+
+/* Enlaces internos del desplegable */
+.dropdown-menu a {
+    display: block;
+    padding: 12px 20px;
+    font-size: 15px;
+    color: #666666;
+    text-decoration: none;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+/* Comportamiento al pasar el ratón dentro del desplegable */
+.dropdown-menu a:hover {
+    background-color: #f8f9fa;
+    color: var(--primary-blue);
+    padding-left: 25px; /* Sutil efecto dinámico de desplazamiento */
+}
+
+/* Acción que activa el menú hacia abajo al hacer hover */
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   5. AJUSTES RESPONSIVE BÁSICOS (MÓVILES)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    .search-bar {
+        width: 100%;
+    }
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+    }
+    .nav-links > li > a {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    .dropdown-menu {
+        position: static; /* En móviles se integra en el flujo normal */
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        display: none; /* Desactivado temporalmente en móvil hasta meter JS para clics */
+    }
+    .dropdown:hover .dropdown-menu {
+        display: flex;
+    }
+}
+/* ==========================================================================
+   6. SECCIÓN HERO / BANNER DE BIENVENIDA
+   ========================================================================== */
+.main-content {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.hero-banner {
+    /* Cargamos la imagen de fondo con un degradado oscuro encima para mejorar el contraste del texto */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('img/imagen-fondo.jpg');
+    
+    /* Propiedades clave para que la imagen sea totalmente fluida y responsive */
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll; /* Cambiar a 'fixed' si buscas un efecto parallax más adelante */
+    
+    /* Espaciado interno generoso para darle altura y aire al banner */
+    padding: 100px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    
+    /* Asegura transiciones limpias si cambia el tamaño de pantalla */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-text {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-text h2 {
+    font-size: 38px; /* Un poco más grande para destacar sobre el fondo */
+    color: var(--white); /* Cambiado a blanco para que resalte sobre la imagen oscurecida */
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra suave para darle volumen al título */
+}
+
+.hero-text p {
+    font-size: 18px; /* Incrementado sutilmente para facilitar la lectura */
+    color: #e2e8f0; /* Un gris muy claro/blanco roto que contrasta perfecto */
+    margin-bottom: 30px;
+    line-height: 1.6;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.btn-hero {
+    display: inline-block;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    text-decoration: none;
+    padding: 14px 36px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+}
+
+.btn-hero:hover {
+    background-color: var(--secondary-blue);
+    transform: translateY(-2px); /* Pequeño efecto dinámico al pasar el ratón */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   7. SECCIÓN DE CATEGORÍAS (REJILLA DE ACCESOS DIRECTOS)
+   ========================================================================== */
+.categories-section {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    font-size: 28px;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    font-size: 15px;
+}
+
+/* Rejilla de categorías */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+/* Tarjeta de acceso directo a Categoría */
+.category-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 30px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-dark);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.02);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-blue);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* Iconos de las categorías */
+.category-icon {
+    width: 65px;
+    height: 65px;
+    background-color: #f0f6ff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.category-icon i {
+    font-size: 26px;
+    color: var(--primary-blue);
+}
+
+.category-card:hover .category-icon {
+    background-color: var(--primary-blue);
+}
+
+.category-card:hover .category-icon i {
+    color: var(--white);
+}
+
+.category-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.category-card p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   8. FOOTER / PIE DE PÁGINA INFRAESTRUCTURA
+   ========================================================================== */
+.main-footer {
+    background-color: #edf2f7; /* Gris/azul claro y suave */
+    color: #4a5568; /* Texto oscuro legible */
+    padding-top: 30px;
+    margin-top: 50px;
+    width: 100%;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 25px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.footer-column h3 {
+    font-size: 16px;
+    color: var(--secondary-blue);
+    margin-bottom: 15px;
+    position: relative;
+    padding-bottom: 6px;
+}
+
+/* Línea decorativa azul debajo de los títulos */
+.footer-column h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 3px;
+    background-color: var(--primary-blue);
+    border-radius: 2px;
+}
+
+.footer-column p {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #4a5568;
+}
+
+/* Redes sociales */
+.footer-socials {
+    display: flex;
+    gap: 8px; /* Un poco más ajustado para que quepan las 5 cómodamente */
+    margin-top: 12px;
+    flex-wrap: wrap; /* Evita roturas en pantallas pequeñas */
+}
+
+.footer-socials a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    background-color: rgba(0, 86, 179, 0.08);
+    color: var(--primary-blue);
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.footer-socials a:hover {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+/* Listas del footer */
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 8px;
+    font-size: 13.5px;
+}
+
+.footer-column ul li a {
+    color: #4a5568;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-column ul li a:hover {
+    color: var(--primary-blue);
+}
+
+/* Info de contacto */
+.footer-contact-info li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: #4a5568;
+    line-height: 1.4;
+}
+
+.footer-contact-info li i {
+    color: var(--primary-blue);
+    margin-top: 3px;
+    width: 14px; /* Centra los iconos de contacto verticalmente en su sitio */
+    text-align: center;
+}
+
+/* --- BARRA INFERIOR DE DERECHOS Y LEGAL --- */
+.footer-bottom {
+    background-color: #e2e8f0;
+    padding: 15px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.footer-bottom-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 12.5px;
+    color: #718096;
+}
+
+.footer-legal-links {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap; /* Asegura que los 4 enlaces se organicen bien si falta espacio */
+}
+
+.footer-legal-links a {
+    color: #718096;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-legal-links a:hover {
+    color: var(--primary-blue);
+}
+
+/* Responsive básico */
+@media (max-width: 768px) {
+    .footer-bottom-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-legal-links {
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   9. GRID DE CATEGORÍAS CON ICONOS (PRODUCTOS.HTML)
+   ========================================================================== */
+.catalog-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.catalog-intro {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.catalog-title {
+    font-size: 32px;
+    color: var(--secondary-blue);
+    font-weight: 700;
+}
+
+.catalog-subtitle {
+    color: var(--text-muted);
+    font-size: 16px;
+    margin-top: 6px;
+}
+
+/* Rejilla de 2 columnas anchas que se vuelven 1 en móviles */
+.main-categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    gap: 25px;
+}
+
+@media (max-width: 768px) {
+    .main-categories-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tarjeta de categoría basada en Iconos */
+.main-category-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row; /* Icono izquierda, información derecha */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    padding: 20px;
+    gap: 20px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
+}
+
+.main-category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 86, 179, 0.06);
+    border-color: var(--primary-blue);
+}
+
+/* Contenedor del Icono Grande Izquierdo */
+.category-card-icon-box {
+    width: 65px;
+    height: 65px;
+    background-color: #f0f6ff; /* Fondo azul suave inicial */
+    color: var(--primary-blue);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    flex-shrink: 0; /* Evita que el cuadrado se deforme si hay mucho texto */
+    transition: all 0.25s ease;
+}
+
+/* Animación: El icono se ilumina por completo al pasar el ratón por la tarjeta */
+.main-category-card:hover .category-card-icon-box {
+    background-color: var(--primary-blue);
+    color: var(--white);
+}
+
+/* Bloque informativo derecho */
+.category-card-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.category-card-info h2 {
+    font-size: 20px;
+    color: var(--secondary-blue);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.category-card-info p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+/* Botón de exploración de la categoría */
+.btn-explore {
+    display: inline-block;
+    align-self: flex-start;
+    margin-top: auto; /* Se ancla magnéticamente al fondo de la caja */
+    background-color: var(--primary-blue);
+    color: var(--white);
+    text-decoration: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 13.5px;
+    transition: background-color 0.2s;
+}
+
+.btn-explore:hover {
+    background-color: var(--secondary-blue);
+}
+
+/* Ajuste responsive para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .main-category-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+}
+
+/* ==========================================================================
+   10. DESPLEGABLE DINÁMICO EN EL FOOTER (FOOTER.HTML)
+   ========================================================================== */
+.dropdown-footer {
+    position: relative;
+    cursor: pointer;
+}
+
+.footer-dropdown-toggle {
+    color: #4a5568;
+    font-size: 13.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.2s ease;
+}
+
+.footer-dropdown-toggle i {
+    font-size: 10px;
+    transition: transform 0.2s ease;
+}
+
+/* El menú oculto flotante del footer */
+.footer-dropdown-menu {
+    display: none;
+    position: absolute;
+    bottom: 100%; /* Se despliega hacia arriba para no tapar el copyright */
+    left: 0;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+    min-width: 200px;
+    list-style: none;
+    padding: 10px 0;
+    z-index: 500;
+}
+
+.footer-dropdown-menu li {
+    width: 100%;
+    margin-bottom: 0 !important;
+}
+
+.footer-dropdown-menu a {
+    display: block;
+    padding: 8px 15px !important;
+    font-size: 13px !important;
+    color: #4a5568 !important;
+}
+
+.footer-dropdown-menu a:hover {
+    background-color: #f8f9fa;
+    color: var(--primary-blue) !important;
+}
+
+/* Mostrar al pasar el ratón */
+.dropdown-footer:hover .footer-dropdown-menu {
+    display: block;
+}
+
+.dropdown-footer:hover .footer-dropdown-toggle {
+    color: var(--primary-blue);
+}
+
+.dropdown-footer:hover .footer-dropdown-toggle i {
+    transform: rotate(90deg); /* La flecha gira al abrirse */
+}
+
+/* ==========================================================================
+   11. CATÁLOGO INTERNO Y COMPONENTES DESPLEGABLES (CATEGORIAS INTERNAS)
+   ========================================================================== */
+.inner-catalog-container {
+    max-width: 1200px;
+    margin: 30px auto 60px auto;
+    padding: 0 20px;
+}
+
+.back-nav {
+    margin-bottom: 25px;
+}
+
+.back-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-nav a:hover {
+    color: var(--primary-blue);
+}
+
+.inner-category-header {
+    margin-bottom: 35px;
+    border-bottom: 2px solid #edf2f7;
+    padding-bottom: 20px;
+}
+
+.inner-category-header h1 {
+    font-size: 28px;
+    color: var(--secondary-blue);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.inner-category-header h1 i {
+    color: var(--primary-blue);
+}
+
+.inner-category-header p {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-top: 6px;
+}
+
+/* --- BLOQUES DE SUB-CATEGORÍAS --- */
+.sub-category-section {
+    margin-bottom: 45px;
+}
+
+.sub-category-title {
+    font-size: 18px;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #f8fafc;
+    padding: 10px 15px;
+    border-left: 4px solid var(--primary-blue);
+    border-radius: 0 4px 4px 0;
+}
+
+.sub-category-title i {
+    color: var(--primary-blue);
+}
+
+.specific-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Tarjetas */
+.specific-product-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.01);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.specific-product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.specific-product-image {
+    width: 100%;
+    height: 200px;
+    background-color: #fafafa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.specific-product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.specific-product-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-tag {
+    align-self: flex-start;
+    background-color: #f0f6ff;
+    color: var(--primary-blue);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.specific-product-info h3 {
+    font-size: 16px;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+/* --- DISEÑO DEL ACORDEÓN DESPLEGABLE NATIVO --- */
+.product-accordion {
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    background-color: #fdfdfd;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Cuando el acordeón está abierto, cambiamos el borde */
+.product-accordion[open] {
+    border-color: rgba(0, 86, 179, 0.3);
+    background-color: var(--white);
+}
+
+.accordion-trigger {
+    padding: 10px 15px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-blue);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none; /* Quita la flecha negra por defecto de HTML */
+}
+
+.accordion-trigger::-webkit-details-marker {
+    display: none; /* Quita la flecha por defecto en Safari */
+}
+
+.accordion-trigger i {
+    font-size: 11px;
+    transition: transform 0.2s ease;
+}
+
+/* Rotar la flecha si se expande */
+.product-accordion[open] .accordion-trigger i {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    padding: 15px;
+    border-top: 1px solid #edf2f7;
+    background-color: #fafbfe;
+}
+
+.accordion-content p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.45;
+    margin-bottom: 12px;
+}
+
+.specific-product-features {
+    list-style: none;
+}
+
+.specific-product-features li {
+    font-size: 12.5px;
+    color: #4a5568;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.specific-product-features li i {
+    color: #28a745;
+    font-size: 10px;
+}
+
+/* Botón de WhatsApp */
+.btn-product-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    background-color: #25d366;
+    color: var(--white);
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 13.5px;
+    margin-top: auto;
+    transition: background-color 0.2s ease;
+}
+
+.btn-product-contact:hover {
+    background-color: #1ebd59;
+}
+
+/* ==========================================================================
+   12. PERSONALIZACIÓN DE FICHA DE PRODUCTO AVANZADA (PRODUCTO.HTML)
+   ========================================================================== */
+.product-page-container {
+    max-width: 1200px;
+    margin: 30px auto 60px auto;
+    padding: 0 20px;
+}
+
+.back-navigation {
+    margin-bottom: 25px;
+}
+
+.back-navigation a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+}
+
+.back-navigation a:hover {
+    color: var(--primary-blue);
+}
+
+.product-single-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+@media (min-width: 768px) {
+    .product-single-layout {
+        grid-template-columns: 5.5fr 6.5fr;
+    }
+}
+
+/* --- COLUMNA MULTIMEDIA (IZQUIERDA) --- */
+.product-media-box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.main-image-wrapper {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 30px;
+    height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.01);
+}
+
+.main-image-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Rejilla para la galería secundaria y el vídeo */
+.media-addons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Mitad para fotos, mitad para vídeo */
+    gap: 15px;
+}
+
+/* Miniaturas de fotos secundarias */
+.product-gallery-thumbnails {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.thumb-item {
+    width: 55px;
+    height: 55px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 4px;
+    cursor: pointer;
+    background-color: var(--white);
+    object-fit: contain;
+    transition: border-color 0.2s;
+}
+
+.thumb-item:hover, .thumb-item.active {
+    border-color: var(--primary-blue);
+}
+
+/* Caja de vídeo del producto */
+.product-video-wrapper {
+    width: 100%;
+    height: 120px;
+    background-color: #0f172a; /* Fondo oscuro cinematográfico */
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.product-video-wrapper iframe, .product-video-wrapper video {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Estado vacío/Placeholder del vídeo */
+.video-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #94a3b8;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.video-placeholder i {
+    font-size: 28px;
+    color: #ef4444; /* Icono play rojo estilo YouTube */
+}
+
+.security-notice {
+    background-color: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 12px 15px;
+    font-size: 13px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.security-notice i {
+    color: var(--primary-blue);
+}
+
+/* --- COLUMNA DATOS (DERECHA) --- */
+.product-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.badge-main {
+    background-color: #f0f6ff;
+    color: var(--primary-blue);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.badge-sub {
+    background-color: #f1f5f9;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.breadcrumb-separator {
+    font-size: 10px;
+    color: #94a3b8;
+}
+
+.product-main-title {
+    font-size: 26px;
+    color: var(--secondary-blue);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.product-description-wrapper h3, .product-specs-wrapper h3 {
+    font-size: 15px;
+    color: var(--text-dark);
+    font-weight: 700;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.product-long-description {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: #4a5568;
+    margin-bottom: 25px;
+}
+
+.specs-features-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.specs-features-list li {
+    font-size: 13.5px;
+    color: #4a5568;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.specs-features-list li i {
+    color: #28a745;
+}
+
+.product-action-card {
+    background-color: #f6fdf8;
+    border: 1px solid rgba(37, 211, 102, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.action-card-text h4 {
+    font-size: 15px;
+    color: #166534;
+    font-weight: 700;
+}
+
+.action-card-text p {
+    font-size: 13px;
+    color: #3f6212;
+}
+
+.btn-whatsapp-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: #25d366;
+    color: var(--white);
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14.5px;
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+    transition: all 0.2s;
+}
+
+.btn-whatsapp-action:hover {
+    background-color: #1ebd59;
+    transform: translateY(-1px);
+}
+
+/* --- SECCIÓN INFERIOR: GRAN TABLA ESPECIFICACIONES --- */
+.product-extra-info-section {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.01);
+}
+
+.technical-table-container h2 {
+    font-size: 18px;
+    color: var(--secondary-blue);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.technical-table-container h2 i {
+    color: var(--primary-blue);
+}
+
+.specs-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.specs-data-table td {
+    padding: 12px 18px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+/* Columna de etiquetas de la izquierda en negrita */
+.specs-data-table td:first-child {
+    font-weight: 700;
+    color: #475569;
+    width: 30%;
+    background-color: #f8fafc;
+}
+
+.specs-data-table td:last-child {
+    color: #334155;
+}
+
+.specs-data-table tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* ==========================================================================
+   13. EXPANSIÓN Y CORRECCIÓN VISUAL DEL PANEL (ADMIN.HTML)
+   ========================================================================== */
+.admin-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.admin-header-box {
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eef2f5;
+    padding-bottom: 15px;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+@media (min-width: 992px) {
+    .admin-grid {
+        grid-template-columns: 4.5fr 5.5fr; /* Ajuste de proporciones de las columnas */
+    }
+}
+
+.admin-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eef2f5;
+}
+
+.admin-card h2 {
+    color: var(--secondary-blue);
+    font-size: 20px;
+    margin-bottom: 25px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #edf2f7;
+    width: 100%;
+}
+
+/* --- ORDENACIÓN LINEAL DEL FORMULARIO --- */
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px; /* Espacio vertical uniforme entre campos */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column; /* Fuerza a la etiqueta a estar ARRIBA y al input ABAJO */
+    gap: 8px;
+    width: 100%;
+}
+
+/* Forzar a dos columnas solo en campos cortos específicos */
+.form-row-2col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+@media (min-width: 600px) {
+    .form-row-2col {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* DISEÑO DE LOS INPUTS Y TEXTAREAS */
+.admin-form input[type="text"],
+.admin-form select,
+.admin-form textarea {
+    width: 100%; /* Ocupan todo el ancho de su caja protectora */
+    padding: 10px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: #f8fafc;
+    color: var(--text-dark);
+    outline: none;
+    box-sizing: border-box; /* Evita que el padding deforme el ancho total */
+    transition: all 0.2s ease;
+}
+
+/* Efecto de iluminación profesional al hacer clic */
+.admin-form input[type="text"]:focus,
+.admin-form select:focus,
+.admin-form textarea:focus {
+    border-color: var(--primary-blue);
+    background-color: var(--white);
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
+}
+
+.admin-form label {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #334155;
+}
+
+.admin-card textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+/* --- BOTONES DEL PANEL --- */
+.form-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.btn-admin {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.btn-save {
+    background-color: #25d366;
+    color: var(--white);
+    flex-grow: 1;
+}
+
+.btn-save:hover {
+    background-color: #1ebd59;
+}
+
+.btn-cancel {
+    background-color: #e2e8f0;
+    color: #4a5568;
+}
+
+.btn-cancel:hover {
+    background-color: #cbd5e1;
+}
+
+/* --- TABLA INVENTARIO --- */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.admin-table th {
+    background-color: #f8fafc;
+    padding: 12px;
+    font-weight: 700;
+    color: #475569;
+    border-bottom: 2px solid var(--border-color);
+    text-align: left;
+}
+
+.admin-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #edf2f7;
+    vertical-align: middle;
+}
+
+/* ==========================================================================
+   14. BOTÓN DE EXPLORACIÓN DE FICHA EN LA CATEGORÍA (CATEGORIA.HTML)
+   ========================================================================== */
+/* Reemplaza o complementa el diseño del botón anterior para lucir el azul médico */
+.specific-product-info .btn-view-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0076a3; /* Azul profesional y corporativo */
+    color: var(--white) !important;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13.5px;
+    margin-top: auto; /* Se alinea magnéticamente en el fondo de la tarjeta */
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.specific-product-info .btn-view-more:hover {
+    background-color: #005c80; /* Tono más oscuro al pasar el cursor */
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   15. CLASES DE UTILIDAD DE SEGURIDAD (ADMIN.HTML)
+   ========================================================================== */
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   16. CONTROL DE CABECERAS GENERALES DE SECCIÓN (CALIBRADO FIEL A LA IMAGEN)
+   ========================================================================== */
+.page-hero-banner {
+    width: 100%;
+    background-color: #f8f9fa !important; /* Gris claro sutil */
+    padding: 24px 0 !important; /* Espaciado compacto vertical */
+    border-bottom: 1px solid #dee2e6 !important; /* Línea fina inferior */
+    margin-bottom: 32px !important;
+    display: block !important;
+}
+
+.page-hero-banner-internal {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 20px;
+    text-align: left !important;
+}
+
+/* Títulos principales (h1): Letra fina y color antracita suave */
+.page-hero-banner h1 {
+    font-size: 26px !important;
+    font-weight: 500 !important; /* Letra estilizada semi-fina */
+    color: #333333 !important; /* Antracita oscuro elegante */
+    margin: 0 0 4px 0 !important;
+    text-align: left !important;
+    letter-spacing: -0.2px !important;
+}
+
+/* Subtítulos (p): Compactos y gris atenuado */
+.page-hero-banner p {
+    font-size: 14.5px !important;
+    color: #6c757d !important;
+    font-weight: 400 !important;
+    margin: 0 !important;
+    text-align: left !important;
+    line-height: 1.4 !important;
+}
+
+/* ==========================================================================
+   16b. SECCIÓN NUESTRA HISTORIA / QUIÉNES SOMOS (CONTENIDO)
+   ========================================================================== */
+/* Sección Historia a dos columnas */
+.about-story-section {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.about-story-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: start; /* Alinea arriba para que no se estire el texto de forma extraña */
+}
+
+@media (min-width: 768px) {
+    .about-story-grid {
+        grid-template-columns: 6fr 6fr; /* Mitad y mitad equilibrado */
+    }
+}
+
+.about-story-text h2 {
+    font-size: 24px;
+    color: var(--secondary-blue);
+    font-weight: 800;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.about-story-text h2 i {
+    color: var(--primary-blue);
+}
+
+.about-highlight {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--primary-blue);
+    line-height: 1.4;
+    margin-bottom: 18px;
+}
+
+.about-story-text p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #475569;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* Foto alargada verticalmente */
+.about-story-image img {
+    width: 100%;
+    height: 650px; 
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
+}
+
+/* Desglose de proveedores */
+.suppliers-info {
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin: 20px 0;
+}
+
+.suppliers-info h4 {
+    font-size: 14.5px;
+    color: #334155;
+    margin-bottom: 10px;
+}
+
+.suppliers-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.suppliers-info li {
+    font-size: 14px;
+    color: #475569;
+    display: flex;
+    gap: 6px;
+}
+
+.suppliers-info li strong {
+    color: var(--primary-blue);
+}
+
+/* Registro Sanitario */
+.sanitary-license {
+    background-color: #f0fdf4; /* Fondo verde sanitario muy sutil */
+    border: 1px dashed #28a745;
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.sanitary-license i {
+    color: #28a745;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.sanitary-license span {
+    font-size: 13px;
+    color: #166534;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* Sección de Valores Fundamentales */
+.about-values-section {
+    max-width: 1200px;
+    margin: 60px auto 30px auto;
+    padding: 0 20px;
+}
+
+.about-values-title {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.about-values-title h2 {
+    font-size: 26px;
+    color: var(--text-dark);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.about-values-title p {
+    font-size: 15px;
+    color: var(--text-muted);
+}
+
+.about-values-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important; /* Reducimos de 260px a 220px para que entren las 4 en fila */
+    gap: 25px !important;
+    width: 100% !important;
+}
+
+.value-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 30px 25px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.08);
+}
+
+.value-icon {
+    width: 60px;
+    height: 60px;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin: 0 auto 20px auto;
+}
+
+.value-card h3 {
+    font-size: 16.5px;
+    color: var(--text-dark);
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.value-card p {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: #64748b;
+}
+
+@media (max-width: 768px) {
+    .about-story-image img {
+        height: 320px; /* Reducción adaptativa para móviles */
+    }
+}
+/* ==========================================================================
+   16c. REPARACIÓN DE LA CUADRÍCULA DE VALORES
+   ========================================================================== */
+.about-values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Forzamos la línea única en PC */
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.value-card {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.value-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 20px;
+}
+
+.value-card h3 {
+    color: var(--secondary-blue);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.value-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   16d. FORZAR DETECCIÓN DE RATÓN EN EL MENÚ
+   ========================================================================== */
+.main-nav a {
+    position: relative;
+    z-index: 999999 !important; /* Capa infinita para estar por encima de todo */
+    pointer-events: auto !important; /* Obliga al navegador a detectar el ratón pase lo que pase */
+}
+
+/* ==========================================================================
+   16 3. PROTECCIÓN DE LA PLANTILLA DEL HEADER
+   ========================================================================== */
+/* Forzamos a que cualquier sección de contenido se quede en una capa inferior */
+main, .main-content, section, .page-hero, .content-wrapper {
+    position: relative;
+    z-index: 1 !important;
+}
+
+/* Aseguramos que la plantilla del header flote siempre de forma suprema */
+.main-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 999999 !important;
+}
+
+/* ==========================================================================
+   17. SECCIÓN DE SERVICIOS ESPECIALIZADOS (CONTENIDO)
+   ========================================================================== */
+.services-grid-section {
+    max-width: 1200px;
+    margin: 40px auto 0 auto;
+    padding: 0 20px;
+}
+
+.services-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.service-card-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.service-card-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+}
+
+.service-icon-wrapper {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.service-icon-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.fallback-icon {
+    font-size: 45px;
+    color: #475569;
+}
+
+.service-card-box h3 {
+    font-size: 19px;
+    color: #2b4c7e;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.service-card-box p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a5568;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.service-mini-checks {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 25px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+    width: 100%;
+    max-width: 240px;
+}
+
+.service-mini-checks li {
+    font-size: 13px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.service-mini-checks li i {
+    color: #28a745;
+    font-size: 12px;
+}
+
+.btn-service-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2b4c7e;
+    color: var(--white) !important;
+    text-decoration: none;
+    padding: 8px 24px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 13.5px;
+    margin-top: auto;
+    transition: background-color 0.2s;
+    min-width: 90px;
+}
+
+.btn-service-info:hover {
+    background-color: #1a3358;
+}
+
+/* ==========================================================================
+   18. SECCIÓN CATÁLOGO DE ALQUILER (CONTENIDO)
+   ========================================================================== */
+.rental-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.rental-section.specific-section {
+    margin-top: 60px;
+}
+
+.rental-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.rental-card-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 35px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.rental-icon-wrapper {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rental-icon-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.rental-card-box h3 {
+    font-size: 16px;
+    color: #2b4c7e;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.rental-subtitle {
+    display: block;
+    font-size: 13.5px;
+    color: #0369a1;
+    font-weight: 600;
+    margin-top: 4px;
+    text-transform: none;
+}
+
+.rental-card-box p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #4a5568;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.btn-rental-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2b4c7e;
+    color: var(--white) !important;
+    text-decoration: none;
+    padding: 8px 24px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 13px;
+    margin-top: auto;
+    min-width: 90px;
+}
+
+/* Tarjetas específicas de artículos concretos */
+.rental-card-box.specific-box {
+    padding: 20px;
+}
+
+.rental-img-wrapper {
+    width: 100%;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.rental-img-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.rental-specific-link {
+    font-size: 13.5px;
+    color: #2b4c7e;
+    text-decoration: underline;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.btn-rental-discover {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2b4c7e;
+    color: var(--white) !important;
+    text-decoration: none;
+    padding: 10px 28px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 13.5px;
+    width: 100%;
+    max-width: 180px;
+}
+
+.specific-box.logo-box {
+    border: 1px solid #e2e8f0;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+.default-logo {
+    height: 100%;
+    max-height: 180px;
+}
+
+/* ==========================================================================
+   19. REDISEÑO LIMPIO DE LA INTERFAZ DE ADMINISTRACIÓN (ADMIN.HTML)
+   ========================================================================== */
+.admin-body-layout {
+    background-color: #f1f5f9;
+}
+
+/* Tarjeta de login totalmente aislada y limpia */
+.admin-login-card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 40px 35px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    width: 100%;
+    max-width: 420px;
+    margin: 10vh auto;
+}
+
+.login-brand {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-brand img {
+    max-height: 55px;
+    margin-bottom: 15px;
+}
+
+.login-brand h2 {
+    font-size: 20px;
+    color: var(--secondary-blue);
+    font-weight: 700;
+}
+
+.login-brand p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+/* Inputs específicos para el login */
+.login-password-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: #f8fafc;
+}
+
+.btn-login-submit {
+    background-color: #0076a3;
+    color: var(--white);
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+}
+
+.btn-login-submit:hover {
+    background-color: #005c80;
+}
+
+.login-error-msg {
+    color: #dc2626;
+    font-size: 13px;
+    font-weight: 600;
+    display: none;
+    margin-top: 5px;
+}
+
+/* Ajustes estructurales de la cabecera real en el panel */
+.admin-header-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 15px;
+}
+
+.btn-cancel-logout {
+    background-color: #e2e8f0;
+    color: #475569;
+    padding: 8px 16px;
+    font-size: 13px;
+}
+
+.btn-cancel-logout:hover {
+    background-color: #cbd5e1;
+}
+
+/* Integración correcta y limpia del Checkbox de Alquiler */
+.form-group-checkbox {
+    margin: 5px 0;
+    padding: 5px 0;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+    cursor: pointer;
+    accent-color: #0076a3; /* Color personalizado para el tic */
+}
+
+.checkbox-label span {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #334155;
+}
+
+/* Oculta por completo la cabecera y el pie de página de la tienda 
+   MIENTRAS la caja de login esté visible en la pantalla */
+.admin-body-layout #admin-login-box:not(.hidden) ~ #global-header,
+.admin-body-layout #admin-login-box:not(.hidden) ~ #global-footer {
+    display: none !important;
+}
+
+/* Por si acaso el orden de los divs en el HTML varía, aseguramos con esto: */
+.admin-body-layout:has(#admin-login-box:not(.hidden)) .admin-conditional-view {
+    display: none !important;
+}
+
+/* ==========================================================================
+   20. COMPONENTE DE ACORDEÓN E INVENTARIO AVANZADO (ADMIN.HTML)
+   ========================================================================== */
+.admin-accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Cabecera de la categoría colapsable */
+.accordion-trigger {
+    width: 100%;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.accordion-trigger:hover {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+.accordion-title-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 14.5px;
+    color: #1e293b;
+}
+
+.accordion-title-content i {
+    color: #0076a3;
+    font-size: 16px;
+}
+
+.product-count-badge {
+    background-color: #e2e8f0;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.accordion-arrow {
+    color: #64748b;
+    transition: transform 0.2s ease;
+}
+
+/* Cuando el bloque esté abierto, rotamos la flecha */
+.accordion-block.open .accordion-arrow {
+    transform: rotate(180deg);
+}
+
+/* Contenedor del contenido ocultable */
+.accordion-content {
+    display: none;
+    padding: 5px 0 10px 0;
+    border-top: none;
+}
+
+/* Si el bloque tiene la clase open, se muestra */
+.accordion-block.open .accordion-content {
+    display: block;
+}
+
+/* ==========================================================================
+   21. SECCIÓN DE CONTACTO Y FORMULARIO PÚBLICO (CONTACTO.HTML)
+   ========================================================================== */
+.contact-container {
+    width: 100%;
+    background-color: #f8fafc;
+    padding-bottom: 60px;
+}
+
+.contact-hero {
+    background: transparent;
+    color: var(--text-dark);
+    padding: 40px 20px 10px 20px;
+    text-align: center;
+}
+
+.contact-hero h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+    color: var(--primary-blue);
+}
+
+.contact-hero p {
+    font-size: 16px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Estructura a 2 columnas */
+.contact-grid-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.contact-main-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+@media (min-width: 768px) {
+    .contact-main-grid {
+        grid-template-columns: 5fr 7fr; /* Canales a la izquierda (5), formulario ancho a la derecha (7) */
+    }
+}
+
+/* Columna de Datos */
+.contact-info-column h2, .contact-form-column h2 {
+    font-size: 22px;
+    color: var(--secondary-blue);
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.contact-intro-text {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #475569;
+    margin-bottom: 30px;
+}
+
+.contact-channels-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.channel-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.channel-icon {
+    width: 44px;
+    height: 44px;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.channel-details h3 {
+    font-size: 15px;
+    color: var(--text-dark);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.channel-details p {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* Botón Verde Especial de WhatsApp */
+.btn-contact-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #25d366;
+    color: var(--white) !important;
+    text-decoration: none;
+    width: 100%;
+    padding: 14px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 15px;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+    transition: background-color 0.2s;
+    text-align: center;
+}
+
+.btn-contact-whatsapp:hover {
+    background-color: #1ebd59;
+}
+
+/* Columna del Formulario de la Tienda */
+.contact-form-column {
+    background-color: var(--white);
+    padding: 40px 35px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.btn-submit-contact {
+    background-color: #2b4c7e;
+    color: var(--white);
+    border: none;
+    padding: 13px 28px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14.5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s;
+}
+
+.btn-submit-contact:hover {
+    background-color: #1a3358;
+}
+
+/* Bloque del Mapa */
+.contact-map-section {
+    max-width: 1200px;
+    margin: 20px auto 0 auto;
+    padding: 0 20px;
+}
+
+.map-wrapper {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+/* ==========================================================================
+   22. MEJORA DE DISEÑO DE LOS CUADROS DEL FORMULARIO DE CONTACTO
+   ========================================================================== */
+.public-form .form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+}
+
+.public-form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155; /* Color gris oscuro profesional para las etiquetas */
+}
+
+/* Rediseño completo de los cuadros de texto */
+.public-form input[type="text"],
+.public-form input[type="email"],
+.public-form input[type="tel"],
+.public-form textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #cbd5e1; /* Borde gris suave, menos duro que el anterior */
+    border-radius: 8px; /* Esquinas redondeadas más modernas */
+    font-family: 'Plus Jakarta Sans', sans-serif; /* Forzamos la tipografía de la web */
+    font-size: 14.5px;
+    color: #1e293b;
+    background-color: #ffffff;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02); /* Sombra interna casi imperceptible para dar profundidad */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    outline: none; /* Quitamos el borde naranja/azul feo por defecto del navegador */
+}
+
+/* Cambiamos el color del texto de sugerencia (placeholder) */
+.public-form input::placeholder,
+.public-form textarea::placeholder {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* EFECTO TOP: Cuando el usuario hace clic para escribir */
+.public-form input[type="text"]:focus,
+.public-form input[type="email"]:focus,
+.public-form input[type="tel"]:focus,
+.public-form textarea:focus {
+    border-color: #2b4c7e; /* El borde cambia al azul corporativo de la captura */
+    background-color: #f8fafc; /* El fondo se vuelve ligeramente grisáceo para destacar */
+    box-shadow: 0 0 0 4px rgba(43, 76, 126, 0.12); /* Crea un halo azul suave alrededor del cuadro */
+}
+
+/* Ajuste extra para el textarea */
+.public-form textarea {
+    resize: vertical; /* Permite estirar hacia abajo pero evita que rompa el diseño hacia los lados */
+    min-height: 120px;
+}
+
+/* ==========================================================================
+   23. SECCIÓN DE TEXTOS LEGALES (LEGAL.HTML)
+   ========================================================================== */
+.legal-container {
+    width: 100%;
+    background-color: #f8fafc;
+    padding: 60px 20px;
+}
+
+.legal-card-content {
+    max-width: 850px;
+    margin: 0 auto;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 50px 45px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.legal-card-content h1 {
+    font-size: 28px;
+    color: var(--primary-blue);
+    font-weight: 800;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 15px;
+}
+
+.legal-card-content p {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.legal-card-content h2 {
+    font-size: 18px;
+    color: var(--secondary-blue);
+    font-weight: 700;
+    margin-top: 35px;
+    margin-bottom: 12px;
+}
+
+.legal-card-content ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.legal-card-content li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+.legal-card-content strong {
+    color: var(--text-dark);
+}
+
+/* Responsivo para móviles */
+@media (max-width: 600px) {
+    .legal-card-content {
+        padding: 30px 20px;
+    }
+    .legal-card-content h1 {
+        font-size: 22px;
+    }
+}
+
+/* ==========================================================================
+   24. PÁGINAS LEGALES Y DE PRIVACIDAD (AVISO, COOKIES, PRIVACIDAD)
+   ========================================================================== */
+
+.legal-container {
+    background-color: #f7fafc;
+    padding: 60px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2d3748;
+    line-height: 1.7;
+}
+
+.legal-block {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.legal-block h1 {
+    color: #0056b3; /* Nuestro azul corporativo */
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    border-bottom: 3px solid #0056b3;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.legal-intro {
+    font-size: 1.1rem;
+    color: #4a5568;
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+.legal-intro a {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.legal-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 25px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.legal-card:hover {
+    box-shadow: 0 6px 18px rgba(0, 86, 179, 0.04);
+}
+
+.legal-card h2 {
+    color: #2b6cb0;
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.legal-card h3 {
+    color: #4a5568;
+    font-size: 1.15rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.legal-card p {
+    margin-bottom: 15px;
+}
+
+.legal-card ul {
+    padding-left: 22px;
+    margin-bottom: 15px;
+}
+
+.legal-card li {
+    margin-bottom: 8px;
+}
+
+/* Tablas Legales y de Cookies */
+.legal-table, .cookies-inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.95rem;
+}
+
+.legal-table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #edf2f7;
+    vertical-align: top;
+}
+
+.legal-table td:first-child {
+    width: 25%;
+    color: #4a5568;
+}
+
+.table-note {
+    font-size: 0.88rem;
+    color: #718096;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.cookies-inventory-table th, .cookies-inventory-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.cookies-inventory-table th {
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+    font-weight: 600;
+}
+
+.cookies-inventory-table code {
+    background: #edf2f7;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: Consolas, Monaco, monospace;
+    color: #c53030;
+    font-size: 0.9rem;
+}
+
+/* Caja de Privacidad de un Vistazo */
+.privacy-summary-box {
+    background: #ebf8ff;
+    border-left: 5px solid #3182ce;
+    padding: 30px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 35px;
+}
+
+.privacy-summary-box h2 {
+    color: #2b6cb0;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.summary-item {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #bee3f8;
+}
+
+.summary-item strong {
+    color: #2c5282;
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+}
+
+.summary-item p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #4a5568;
+    line-height: 1.5;
+}
+
+/* Contenedor de subcategorías de Privacidad */
+.category-detail-box {
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.category-detail-box h3 {
+    margin-top: 0;
+    color: #2b6cb0;
+    border-bottom: 1px solid #cbd5e0;
+    padding-bottom: 5px;
+}
+
+/* Enlaces de Navegadores */
+.browser-links-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.browser-links-grid a {
+    background: #ffffff;
+    border: 1px solid #cbd5e0;
+    padding: 10px 18px;
+    border-radius: 20px;
+    color: #4a5568;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.browser-links-grid a:hover {
+    background: #0056b3;
+    color: #ffffff;
+    border-color: #0056b3;
+}
+
+/* Sección de Derechos y Footer legal */
+.rights-box {
+    border: 2px dashed #bee3f8;
+    background: #f0fff4; /* Un toque verde para destacar acción */
+    border-color: #38a169;
+}
+
+.rights-box h2 {
+    color: #276749;
+}
+
+.rights-box li {
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+
+.rights-box i {
+    color: #38a169;
+    width: 20px;
+}
+
+.legal-footer-info {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+    text-align: right;
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+/* Adaptación para pantallas móviles */
+@media (max-width: 768px) {
+    .legal-block {
+        padding: 20px;
+    }
+    .legal-block h1 {
+        font-size: 1.7rem;
+    }
+    .legal-table td {
+        display: block;
+        width: 100% !important;
+        padding: 5px 0;
+    }
+    .cookies-inventory-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* ==========================================================================
+   25. ESTILOS DE FICHA DE PRODUCTO ÚNICO (RECK MOTOmed y futuros)
+   ========================================================================== */
+.product-single-section {
+    padding: 4rem 2rem;
+    background-color: var(--white);
+}
+
+.product-single-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Divide la pantalla en dos mitades exactas */
+    gap: 4rem;
+    align-items: start;
+}
+
+.product-single-gallery {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Sombra elegante para la foto */
+}
+
+.product-main-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+/* Contenedor de la imagen grande */
+.main-image-wrapper {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+    background-color: var(--white);
+    border: 1px solid var(--light-bg);
+}
+
+/* Cuadrícula de las 4 fotos pequeñas */
+.product-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+/* Estilo individual de cada miniatura */
+.thumb-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Efectos al pasar el ratón y al seleccionarla */
+.thumb-img:hover {
+    opacity: 0.8;
+    transform: translateY(-2px);
+}
+
+.thumb-img.active {
+    opacity: 1;
+    border-color: var(--primary-blue);
+}
+
+.product-single-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.product-single-name {
+    font-size: 2.5rem;
+    color: var(--secondary-blue);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.product-single-description {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
+/* Caja de especificaciones técnicas */
+.product-tech-specs {
+    background-color: var(--light-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border-left: 4px solid var(--primary-blue);
+}
+
+.product-tech-specs h3 {
+    color: var(--secondary-blue);
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
+}
+
+.tech-specs-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.tech-specs-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+.tech-specs-list li i {
+    color: var(--primary-blue);
+    margin-top: 0.2rem;
+}
+
+/* Botón de WhatsApp Gigante y Atractivo */
+.whatsapp-btn-large {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    background-color: #25D366; /* Verde oficial de WhatsApp */
+    color: var(--white);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 1.5rem;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    align-self: flex-start;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-btn-large:hover {
+    background-color: #128C7E;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    color: var(--white);
+}
+
+/* Adaptación para móviles (Pantallas pequeñas) */
+@media (max-width: 768px) {
+    .product-single-container {
+        grid-template-columns: 1fr; /* Vuelve a 1 sola columna en móvil */
+        gap: 2rem;
+    }
+    .product-single-name {
+        font-size: 2rem;
+    }
+    .whatsapp-btn-large {
+        align-self: stretch; /* El botón ocupa todo el ancho en el móvil */
+        text-align: center;
+    }
+}
+
+/* Contenedor Responsive para Vídeos de YouTube */
+.video-responsive-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Mantiene la proporción perfecta del vídeo */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 2.5rem; /* Separación con la galería de abajo */
+    background-color: var(--light-bg);
+}
+
+.video-responsive-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* ==========================================================================
+   26. SECCIÓN DE TERAPIAS A ANCHO COMPLETO (MOTOmed)
+   ========================================================================== */
+.full-width-therapy-box {
+    grid-column: 1 / -1; /* Esto hace que el bloque salte la división y ocupe las dos columnas */
+    background-color: var(--light-bg);
+    padding: 3rem;
+    border-radius: 12px;
+    border-top: 5px solid var(--primary-blue); /* La línea azul corporativa */
+    margin-top: 3rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.full-width-therapy-box h3 {
+    text-align: center;
+    color: var(--secondary-blue);
+    font-size: 1.8rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Cuadrícula interna de 3 columnas para las tarjetas */
+.therapy-modes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+/* Estilo individual de las 3 tarjetas */
+.therapy-mode-card {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.therapy-mode-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    border-bottom-color: var(--primary-blue);
+}
+
+.therapy-mode-icon {
+    font-size: 3.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 1.5rem;
+}
+
+.therapy-mode-card h4 {
+    color: var(--secondary-blue);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.therapy-mode-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Estilo para el logotipo oficial en la ficha de producto */
+.brand-logo-img {
+    max-width: 280px; /* Tamaño elegante y proporcionado */
+    height: auto;
+    margin: 0 auto 1.5rem auto; /* Los 'auto' a los lados lo empujan al centro */
+    display: block;
+    align-self: center; /* Magia pura de Flexbox para centrarlo en la columna */
+}
+
+/* Modificadores para la caja de Tecnología (Verde) */
+.full-width-therapy-box.green-theme {
+    border-top-color: #25D366;
+    margin-top: 2rem; /* Deja un respiro entre la caja azul y la verde */
+}
+
+.therapy-mode-card.green-theme:hover {
+    border-bottom-color: #25D366;
+}
+
+.therapy-mode-icon.green-theme {
+    color: #25D366;
+}
+
+/* ==========================================================================
+   27 . PÁGINA DE ERROR 404
+   ========================================================================== */
+.error-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    text-align: center;
+    background-color: var(--light-bg, #f8f9fa);
+    padding: 60px 20px;
+}
+
+.error-content h1 {
+    font-size: 140px;
+    color: var(--primary-blue, #0056b3);
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.error-content h2 {
+    font-size: 28px;
+    color: var(--text-dark, #333333);
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.error-content p {
+    font-size: 18px;
+    color: var(--text-muted, #666666);
+    margin-bottom: 30px;
+}
+
+.error-content .btn-primary {
+    display: inline-block;
+    padding: 12px 28px;
+    background-color: var(--secondary-blue, #003366);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.error-content .btn-primary:hover {
+    background-color: var(--primary-blue, #0056b3);
+}
+/* ==========================================================================
+   28. AJUSTES DE LA BARRA DE BÚSQUEDA (LUPA A LA DERECHA)
+   ========================================================================== */
+.search-bar form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-width: 250px;
+}
+
+.search-bar input {
+    width: 100%;
+    /* Aumentamos un poco el padding derecho (55px) para que el texto no se esconda debajo del botón azul */
+    padding: 10px 55px 10px 15px; 
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-bar input:focus {
+    border-color: var(--primary-blue, #0056b3);
+}
+
+.search-bar button {
+    position: absolute;
+    right: 4px; /* Lo despegamos 4px del borde para que quede flotando bonito por dentro */
+    top: 4px;
+    bottom: 4px;
+    background-color: var(--primary-blue, #0056b3); /* Fondo azul corporativo */
+    border: none;
+    color: #ffffff; /* Icono blanco */
+    font-size: 15px;
+    cursor: pointer;
+    padding: 0 16px; /* Hacemos el botón un poco más ancho */
+    border-radius: 4px; /* Bordes ligeramente redondeados para que encaje con la caja */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: var(--secondary-blue, #003366); /* Azul más oscuro al pasar el ratón */
+}
+
+/* ==========================================================================
+   29. OPTIMIZACIÓN DEL ENCABEZADO PARA MÓVILES (SMARTPHONES)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .header-container {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 8px 15px !important;
+    }
+
+    /* 1. Logo a la izquierda */
+    .logo {
+        flex-shrink: 0 !important;
+    }
+    .logo img {
+        height: 32px !important;
+        width: auto !important;
+    }
+
+    /* 2. Buscador en el centro (Efecto Desplegable Mágico) */
+    .search-bar {
+        flex: 1 1 auto !important;
+        margin: 0 10px !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+    }
+    .search-bar form {
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+        justify-content: flex-end !important;
+        height: 36px !important;
+    }
+    .search-bar input {
+        position: absolute !important;
+        right: 0 !important;
+        width: 0 !important; /* Oculto por defecto */
+        padding: 0 !important;
+        border: none !important;
+        opacity: 0 !important;
+        height: 100% !important;
+        border-radius: 6px !important;
+        transition: all 0.3s ease-in-out !important; /* Animación suave */
+    }
+    
+    /* Clase que añadirá JavaScript al tocar la lupa */
+    .search-bar form.open input {
+        width: 100% !important; /* Se estira hacia la izquierda */
+        padding: 6px 36px 6px 15px !important;
+        border: 1px solid #cbd5e1 !important;
+        opacity: 1 !important;
+    }
+    
+    .search-bar button {
+        position: absolute !important;
+        right: 0 !important;
+        height: 36px !important;
+        width: 36px !important;
+        padding: 0 !important;
+        border-radius: 6px !important;
+        z-index: 10 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* 3. Icono del Teléfono a la derecha */
+    .header-contact {
+        flex-shrink: 0 !important;
+    }
+    .contact-item {
+        gap: 0 !important;
+    }
+    .contact-item div,
+    .contact-label,
+    .contact-phone {
+        display: none !important;
+    }
+    .contact-item i {
+        font-size: 15px !important;
+        color: #ffffff !important;
+        background-color: var(--primary-blue, #0056b3) !important;
+        width: 36px !important;
+        height: 36px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 50% !important;
+    }
+}
+
+/* ==========================================================================
+   30. FORMULARIO DE CONSULTAS (CORREO ELECTRÓNICO)
+   ========================================================================== */
+.contact-section {
+    padding: 40px 20px;
+    background-color: var(--light-bg);
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 30px auto 0 auto;
+    background: var(--white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+}
+
+.email-submit-btn {
+    width: 100%;
+    background-color: var(--primary-blue); /* Azul corporativo */
+    color: var(--white);
+    border: none;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.email-submit-btn:hover {
+    background-color: var(--dark-blue);
+}
+
+.email-submit-btn i {
+    font-size: 18px;
+}

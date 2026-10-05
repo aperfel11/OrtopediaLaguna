@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RECK MOTOmed - Ortopedia Laguna</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+<body>
+    <header id="global-header" class="main-header"></header>
+
+    <div id="header-placeholder"></div>
+
+    <main class="catalog-container">
+        <section class="catalog-intro">
+            <h1 class="catalog-title">RECK MOTOmed</h1>
+            <p class="catalog-subtitle">Sistemas inteligentes de cinesiterapia para rehabilitación neurológica y neuromuscular.</p>
+        </section>
+
+        <section class="product-single-section">
+            <div class="product-single-container">
+                
+                <div class="product-single-gallery">
+                    
+                    <div class="main-image-wrapper">
+                        <img src="img/motomed-1.jpg" alt="RECK MOTOmed Principal" id="current-main-image" class="product-main-img">
+                    </div>
+                    
+                    <div class="product-thumbnails">
+                        <img src="img/motomed-1.jpg" alt="Vista Frontal" class="thumb-img active" onclick="changeMainImage(this)">
+                        <img src="img/motomed-2.jpg" alt="Vista Pantalla" class="thumb-img" onclick="changeMainImage(this)">
+                        <img src="img/motomed-3.jpg" alt="Vista Pedales" class="thumb-img" onclick="changeMainImage(this)">
+                        <img src="img/motomed-4.jpg" alt="Vista Lateral" class="thumb-img" onclick="changeMainImage(this)">
+                    </div>
+
+                    <h3 style="color: var(--secondary-blue); font-size: 1.2rem; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 2px solid var(--primary-blue); padding-bottom: 0.5rem; display: inline-block;">
+                        <i class="fas fa-play-circle" style="margin-right: 0.5rem;"></i> Demostración en Vídeo
+                    </h3>
+                    <div class="video-responsive-wrapper" style="margin-bottom: 0;">
+                        <iframe src="https://www.youtube.com/embed/Q4X-P6r_l2U?si=tX6V1-9f2K0jJ7aB" title="Demostración RECK MOTOmed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+
+                </div>
+
+                <div class="product-single-info">
+                    
+                    <img src="img/logo-motomed.png" alt="Logotipo Oficial RECK MOTOmed" class="brand-logo-img">
+                    
+                    <p class="product-single-description">
+                        Los sistemas de cinesiterapia <strong>RECK MOTOmed</strong> permiten un entrenamiento suave, seguro y eficaz desde la silla o silla de ruedas. Son el estándar de oro en la rehabilitación de personas con limitaciones de movimiento, espasticidad o debilidad muscular, garantizando un mantenimiento óptimo de las funciones corporales y cardiovasculares.
+                    </p>
+
+                    <div style="margin-top: 1rem; color: var(--text-muted); font-size: 0.95rem;">
+                        <strong>Indicado para:</strong> Esclerosis Múltiple, Ictus (Apoplejía), Paraplejía, Tetraplejía, Parkinson, Distrofia Muscular, Traumatismo Craneoencefálico y rehabilitación postoperatoria.
+                    </div>
+
+                    <a href="https://wa.me/34600000000?text=Hola,%20quisiera%20información%20detallada%20y%20precios%20sobre%20los%20equipos%20RECK%20MOTOmed" target="_blank" class="whatsapp-btn-large">
+                        <i class="fab fa-whatsapp"></i> Consultar Modelos y Precios
+                    </a>
+                </div>
+
+                <div class="full-width-therapy-box">
+                    <h3>3 Modos de Terapia Integrados</h3>
+                    <div class="therapy-modes-grid">
+                        
+                        <div class="therapy-mode-card">
+                            <i class="fas fa-sync-alt therapy-mode-icon"></i>
+                            <h4>Terapia Pasiva</h4>
+                            <p>El motor mueve las piernas o brazos suavemente para relajar la musculatura, reducir la espasticidad y mantener la flexibilidad articular de forma continua.</p>
+                        </div>
+
+                        <div class="therapy-mode-card">
+                            <i class="fas fa-hands-helping therapy-mode-icon"></i>
+                            <h4>Terapia Asistida</h4>
+                            <p>La función "ServoPedaleo" asiste el movimiento para que el paciente pueda entrenar utilizando su mínima fuerza residual de forma totalmente segura.</p>
+                        </div>
+
+                        <div class="therapy-mode-card">
+                            <i class="fas fa-dumbbell therapy-mode-icon"></i>
+                            <h4>Terapia Activa</h4>
+                            <p>El usuario pedalea con su propia fuerza muscular contra resistencias regulables, fortaleciendo la musculatura y mejorando la capacidad cardiovascular.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="full-width-therapy-box green-theme">
+                    <h3>Tecnología y Seguridad de Serie</h3>
+                    <div class="therapy-modes-grid">
+                        
+                        <div class="therapy-mode-card green-theme">
+                            <i class="fas fa-shield-alt therapy-mode-icon green-theme"></i>
+                            <h4>Protección de Movimiento</h4>
+                            <p>Los sensores detectan inmediatamente bloqueos o contracturas y detienen el motor de forma segura para proteger articulaciones y ligamentos.</p>
+                        </div>
+
+                        <div class="therapy-mode-card green-theme">
+                            <i class="fas fa-wave-square therapy-mode-icon green-theme"></i>
+                            <h4>Control de Espasmos</h4>
+                            <p>Al detectar una rampa espástica, el equipo cambia suavemente la dirección de rotación (principio de inhibición antagónica) para relajar el calambre.</p>
+                        </div>
+
+                        <div class="therapy-mode-card green-theme">
+                            <i class="fas fa-balance-scale therapy-mode-icon green-theme"></i>
+                            <h4>Entrenamiento de Simetría</h4>
+                            <p>La pantalla muestra en tiempo real qué porcentaje de fuerza está aplicando la pierna izquierda frente a la derecha, corrigiendo el déficit lateral (vital post-Ictus).</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+   <footer id="global-footer" class="main-footer"></footer>
+
+    <script src="main.js"></script>
+    <script>
+        function changeMainImage(element) {
+            // 1. Cambia la imagen grande por la que hemos hecho clic
+            document.getElementById('current-main-image').src = element.src;
+            
+            // 2. Quita la clase "active" de todas las miniaturas
+            let thumbnails = document.getElementsByClassName('thumb-img');
+            for(let i = 0; i < thumbnails.length; i++) {
+                thumbnails[i].classList.remove('active');
+            }
+            
+            // 3. Añade el borde azul (clase active) a la miniatura que acabamos de pulsar
+            element.classList.add('active');
+        }
+    </script>
+</body>
+</html>

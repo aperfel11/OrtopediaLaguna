@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Ortopedia Laguna</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+<body>
+
+    <!-- Cabecera Global Dinámica -->
+    <header id="global-header" class="main-header"></header>
+
+    <main class="catalog-container">
+        
+        <section class="catalog-intro">
+            <h1 class="catalog-title">Contacta con Nosotros</h1>
+            <p class="catalog-subtitle">Estamos aquí para ayudarte. Visítanos en nuestra tienda, llámanos o envíanos un mensaje.</p>
+        </section>
+
+        <section class="contact-grid-section"> 
+
+        <!-- Bloque Principal de Contacto -->
+        <section class="contact-grid-section">
+            <div class="contact-main-grid">
+                
+                <!-- Columna Izquierda: Información de Interés y Canales Rápidos -->
+                <div class="contact-info-column">
+                    <h2>Información de Contacto</h2>
+                    <p class="contact-intro-text">Si tienes dudas sobre algún producto del catálogo, solicitudes de alquiler o necesitas asesoramiento especializado, no dudes en comunicarte con nuestro equipo.</p>
+                    
+                    <div class="contact-channels-list">
+                        <!-- Canal 1: Dirección -->
+                        <div class="channel-item">
+                            <div class="channel-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="channel-details">
+                                <h3>Nuestra Tienda</h3>
+                                <p>Calle San Juan, 52, La Laguna, Tenerife</p>
+                            </div>
+                        </div>
+
+                        <!-- Canal 2: Teléfono -->
+                        <div class="channel-item">
+                            <div class="channel-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div class="channel-details">
+                                <h3>Llámanos</h3>
+                                <p>922 25 48 84</p>
+                            </div>
+                        </div>
+
+                        <!-- Canal 3: Horario -->
+                        <div class="channel-item">
+                            <div class="channel-icon"><i class="fa-solid fa-clock"></i></div>
+                            <div class="channel-details">
+                                <h3>Horario de Atención</h3>
+                                <p>Lunes a Viernes: 09:00 - 13:30 y 17:00 - 19:30<br>Sábados: 10:30 - 13:30</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botón de WhatsApp Directo Prominente -->
+                    <a href="https://wa.me/34922254884?text=Hola,%20vengo%20de%20la%20web%20y%20tengo%20una%20consulta" class="btn-contact-whatsapp" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> Escríbenos por WhatsApp
+                    </a>
+                </div>
+
+                <section class="contact-section">
+    <div class="container">
+        <h2 class="section-title">Envíanos tu consulta</h2>
+        <p class="section-subtitle">Rellena el formulario y te responderemos lo antes posible.</p>
+        
+        <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+            <!-- TU ACCESS KEY DE WEB3FORMS (Pega aquí la clave que te enviaron al correo) -->
+            <input type="hidden" name="apikey" value="f43b3990-4c0a-49be-8778-06f77361f8d0">
+            <input type="hidden" name="redirect" value="https://tuweb.com/gracias.html">
+
+            <!-- Configuración opcional para redireccionar o personalizar el asunto -->
+            <input type="hidden" name="subject" value="Nueva consulta desde la web de Ortopedia Laguna">
+            
+            <div class="form-group">
+                <label for="nombre">Nombre y Apellidos *</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Pérez">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo electrónico *</label>
+                <input type="email" id="email" name="email" required placeholder="Ej: usuario@correo.com">
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono de contacto</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="Ej: 600123456">
+            </div>
+
+            <div class="form-group">
+                <label for="asunto">Motivo de la consulta</label>
+                <select id="asunto" name="asunto">
+                    <option value="Consulta general">Consulta general</option>
+                    <option value="Presupuesto de producto">Presupuesto de producto</option>
+                    <option value="Alquiler">Alquiler de material</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="mensaje">Mensaje o Duda *</label>
+                <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Escribe aquí los detalles de tu consulta..."></textarea>
+            </div>
+
+            <!-- Botón de envío clásico -->
+            <button type="submit" class="email-submit-btn">
+                <i class="fas fa-paper-plane"></i> Enviar consulta por correo
+            </button>
+        </form>
+    </div>
+</section>
+
+            </div>
+        </section>
+
+        <!-- Bloque Inferior: Mapa de Google Maps de la Fachada -->
+        <section class="contact-map-section">
+            <div class="map-wrapper">
+                <!-- Mapa embebido ficticio de la Calle San Juan 52 (puedes cambiar el src por tu iframe real) -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d897732.8103001013!2d-17.537330421875!3d28.4865089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc41cdbecf92f11f%3A0xd0354ff18edeae8f!2sOrtopedia%20Laguna!5e0!3m2!1ses!2ses!4v1783268514180!5m2!1ses!2ses" width="100%" height="400" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pie de Página Global Dinámico -->
+    <footer id="global-footer" class="main-footer"></footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

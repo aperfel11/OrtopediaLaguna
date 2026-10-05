@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - Ortopedia Laguna</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+<body>
+
+    <header id="global-header" class="main-header"></header>
+
+    <main class="catalog-container">
+        
+        <section class="catalog-intro">
+            <h1 class="catalog-title">Nuestras Categorías de Productos</h1>
+            <p class="catalog-subtitle">Selecciona una familia para descubrir nuestras soluciones técnicas especializadas.</p>
+        </section>
+
+        <section class="main-categories-grid">
+            
+            <article class="main-category-card">
+                <div class="category-card-icon-box">
+                    <i class="fa-solid fa-shower"></i>
+                </div>
+                <div class="category-card-info">
+                    <h2>Aseo</h2>
+                    <p>Sillas de ducha, elevadores de WC, banquetas regulables y barras de seguridad antideslizantes para adaptar tu baño.</p>
+                    <a href="categoria.html?id=aseo" class="btn-explore">Explorar Productos</a>
+                </div>
+            </article>
+
+            <article class="main-category-card">
+                <div class="category-card-icon-box">
+                    <i class="fa-solid fa-wheelchair"></i>
+                </div>
+                <div class="category-card-info">
+                    <h2>Movilidad</h2>
+                    <p>Sillas de ruedas manuales y eléctricas, scooters compactos, andadores de aluminio y accesorios para tu autonomía.</p>
+                    <a href="categoria.html?id=movilidad" class="btn-explore">Explorar Productos</a>
+                </div>
+            </article>
+
+            <article class="main-category-card">
+                <div class="category-card-icon-box">
+                    <i class="fa-solid fa-bed"></i>
+                </div>
+                <div class="category-card-info">
+                    <h2>Descanso</h2>
+                    <p>Camas articuladas eléctricas, colchones sanitarios, almohadas anatómicas y barandillas protectoras de alta resistencia.</p>
+                    <a href="categoria.html?id=descanso" class="btn-explore">Explorar Productos</a>
+                </div>
+            </article>
+
+            <article class="main-category-card">
+                <div class="category-card-icon-box">
+                    <i class="fa-solid fa-kit-medical"></i>
+                </div>
+                <div class="category-card-info">
+                    <h2>Vida Diaria</h2>
+                    <p>Pinzas de alcance, cubiertos ergonómicos, pastilleros organizadores y ayudas técnicas para las tareas del hogar.</p>
+                    <a href="categoria.html?id=vida-diaria" class="btn-explore">Explorar Productos</a>
+                </div>
+            </article>
+
+            <article class="main-category-card">
+                <div class="category-card-icon-box">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="category-card-info">
+                    <h2>Sujecciones</h2>
+                    <p>Cinturones de seguridad para sillas de ruedas, arneses de cama y sistemas de protección perineal y abdominal.</p>
+                    <a href="categoria.html?id=sujecciones" class="btn-explore">Explorar Productos</a>
+                </div>
+            </article>
+
+            <article class="main-category-card">
+                <div class="category-card-icon-box">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <div class="category-card-info">
+                    <h2>Productos Antiescara</h2>
+                    <p>Cojines viscoelásticos y de aire, colchones de presión alterna con compresor y taloneras protectoras especiales.</p>
+                    <a href="categoria.html?id=antiescaras" class="btn-explore">Explorar Productos</a>
+                </div>
+            </article>
+
+            <article class="main-category-card">
+                <div class="category-card-icon-box">
+                    <i class="fa-solid fa-hands-holding"></i>
+                </div>
+                <div class="category-card-info">
+                    <h2>Grúas y Transferencias</h2>
+                    <p>Grúas de bipedestación y elevación, arneses ergonómicos seguros, discos de giro y tablas de transferencia rígidas.</p>
+                    <a href="categoria.html?id=gruas" class="btn-explore">Explorar Productos</a>
+                </div>
+            </article>
+            <article class="main-category-card">
+                <div class="category-card-icon-box">
+                    <i class="fa-solid fa-person-biking"></i>
+                </div>
+                <div class="category-card-info">
+                    <h2>RECK MOTOmed</h2>
+                    <p>Equipos de cinesiterapia profesional para rehabilitación.</p>
+                    <a href="reck-motomed.html" class="btn-explore">Explorar Productos</a>
+                </div>
+            </article>
+
+
+        </section>
+
+    </main>
+
+    <footer id="global-footer" class="main-footer"></footer>
+
+    <script src="main.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Leer la URL para ver si alguien usó el buscador
+        const parametros = new URLSearchParams(window.location.search);
+        const busqueda = parametros.get('buscar');
+
+        if (busqueda) {
+            const termino = busqueda.toLowerCase();
+            
+            // Asumiendo que quieres filtrar los bloques de categorías o las tarjetas de productos
+            // Ajusta '.category-card' a la clase principal que envuelve tus productos en esta página
+            const elementosAFiltrar = document.querySelectorAll('.category-card'); 
+            let resultadosEncontrados = 0;
+
+            elementosAFiltrar.forEach(elemento => {
+                const textoElemento = elemento.innerText.toLowerCase();
+                if (textoElemento.includes(termino)) {
+                    elemento.style.display = 'flex'; // o 'block' dependiendo de tu CSS original
+                    resultadosEncontrados++;
+                } else {
+                    elemento.style.display = 'none'; // Ocultamos lo que no coincida
+                }
+            });
+
+            // Opcional: Mostrar un mensaje si no hay resultados
+            if (resultadosEncontrados === 0) {
+                const contenedor = document.querySelector('.catalog-grid') || document.querySelector('main');
+                const mensaje = document.createElement('h3');
+                mensaje.innerText = `No se encontraron resultados para "${busqueda}".`;
+                mensaje.style.textAlign = 'center';
+                mensaje.style.padding = '40px';
+                contenedor.appendChild(mensaje);
+            }
+        }
+    });
+</script>
+</body>
+</html>

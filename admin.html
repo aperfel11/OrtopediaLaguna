@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Gestión - Ortopedia Laguna</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+<body class="admin-body-layout">
+
+
+    <main class="admin-container">
+
+        <div id="admin-login-box" class="admin-login-card">
+            <div class="login-brand">
+                <img src="img/logo.png" alt="Ortopedia Laguna" onerror="this.style.display='none';">
+                <h2><i class="fa-solid fa-lock"></i> Acceso Restringido</h2>
+                <p>Introduce las credenciales de administrador para gestionar el catálogo técnico.</p>
+            </div>
+            
+            <form id="login-form" class="admin-form">
+                <div class="form-group">
+                    <label for="login-user">Usuario</label>
+                    <input type="text" id="login-user" placeholder="Ej. admin" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-pass">Contraseña</label>
+                    <input type="password" id="login-pass" placeholder="••••••••" class="login-password-input" required>
+                </div>
+                <p id="login-error" class="login-error-msg"><i class="fa-solid fa-triangle-exclamation"></i> Usuario o contraseña incorrectos</p>
+                <button type="submit" class="btn-admin btn-login-submit"><i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión</button>
+            </form>
+        </div>
+
+        <div id="admin-content" class="hidden">
+            <div class="admin-header-box">
+                <div>
+                    <h1><i class="fa-solid fa-sliders"></i> Panel de Administración</h1>
+                    <p>Sube y gestiona el inventario. Las plantillas de la web se actualizarán solas al instante.</p>
+                </div>
+                <button id="btn-logout" class="btn-admin btn-cancel-logout"><i class="fa-solid fa-power-off"></i> Cerrar Sesión</button>
+            </div>
+
+            <div class="admin-grid">
+                <section class="admin-card form-section">
+                    <h2 id="form-title">Añadir Nuevo Producto</h2>
+                    <form id="product-form" class="admin-form">
+                        <div class="form-group">
+                            <label for="prod-name">Nombre del Producto</label>
+                            <input type="text" id="prod-name" placeholder="Ej. Andador de Aluminio Premium" required>
+                        </div>
+                        
+                        <div class="form-row-2col">
+                            <div class="form-group">
+                                <label for="prod-category">Categoría Madre</label>
+                                <select id="prod-category" required>
+                                    <option value="" disabled selected>Selecciona una opción</option>
+                                    <option value="aseo">Aseo</option>
+                                    <option value="movilidad">Movilidad</option>
+                                    <option value="descanso">Descanso</option>
+                                    <option value="vida-diaria">Vida Diaria</option>
+                                    <option value="sujecciones">Sujecciones</option>
+                                    <option value="antiescaras">Productos Antiescara</option>
+                                    <option value="gruas">Grúas y Transferencias</option>
+                                    <option value="motomed">RECK MOTOmed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="prod-subcategory">Subcategoría (Etiqueta de Clasificación)</label>
+                                <input type="text" id="prod-subcategory" placeholder="Ej. Andadores Técnicos" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group-checkbox">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="prod-is-rental">
+                                <span>¿Es un producto específico para la sección de Alquiler?</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="producto-ref">Referencia en Tienda (Opcional)</label>
+                            <input type="text" id="producto-ref" placeholder="Ej: ORT-402">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prod-desc">Descripción General Corta</label>
+                            <textarea id="prod-desc" rows="3" placeholder="Resume para qué sirve el producto..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-img">Ruta de la Imagen Principal</label>
+                            <input type="text" id="prod-img" placeholder="Ej. img/andador.jpg" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-gallery">Galería de Fotos Secundarias (Separadas por comas)</label>
+                            <input type="text" id="prod-gallery" placeholder="Ej. img/andador-1.jpg, img/andador-2.jpg">
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-video">Enlace de Vídeo de YouTube</label>
+                            <input type="text" id="prod-video" placeholder="Ej. https://www.youtube.com/watch?v=XXXXXX">
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-features">Ventajas Destacadas (Separadas por comas)</label>
+                            <input type="text" id="prod-features" placeholder="Ej. Peso ligero 6kg, Frenos automáticos">
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-specs-table">Tabla Técnica (Formato: Característica = Valor, separado por comas)</label>
+                            <textarea id="prod-specs-table" rows="3" placeholder="Ej. Ancho total = 60cm, Material = Aluminio"></textarea>
+                        </div>
+                        
+                        <div class="form-buttons">
+                            <button type="submit" class="btn-admin btn-save"><i class="fa-solid fa-floppy-disk"></i> Guardar Producto</button>
+                            <button type="button" id="btn-cancel" class="btn-admin btn-cancel hidden">Cancelar Edición</button>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="admin-card table-section">
+                    <h2>Productos en el Sistema</h2>
+                    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Gestiona, edita o elimina el inventario actual de la tienda.</p>
+    
+                     <div class="admin-search-wrapper" style="margin-bottom: 20px; position: relative;">
+                        <input type="text" id="admin-search-input" placeholder="🔍 Buscar por nombre, etiqueta o subcategoría..." style="width: 100%; padding: 10px 14px 10px 35px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 14px; background-color: #f8fafc;">
+                        <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 13px; color: #94a3b8;"></i>
+                    </div>
+
+            <div id="admin-inventory-accordion" class="admin-accordion-container">
+        </div>
+</section>
+            </div>
+        </div>
+
+    </main>
+
+
+    <script src="main.js"></script>
+</body>
+</html>
